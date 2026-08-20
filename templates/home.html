@@ -50,29 +50,19 @@
   </div>
 
     <div class="row mb-2 g-2">
+      {% for blog in featured_blogs %}
     <div class="col-md-6">
         <div class="card">
         <div class="card-body">
-            <h3>Post Title</h3>
-            <small class="mb-1 text-muted">Nov 11 | Author</small>
+            <h3>{{blog.title}}</h3>
+            <small class="mb-1 text-muted">{{ blog.created_at|date:"M d" }} | {{ blog.author.username }}</small>
             <p class="card-text">
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+            {{blog.short_description}}
             </p>
         </div>
         </div>
     </div>
-
-    <div class="col-md-6">
-        <div class="card">
-        <div class="card-body">
-            <h3>Post Title</h3>
-            <small class="mb-1 text-muted">Nov 11 | Author</small>
-            <p class="card-text">
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-            </p>
-        </div>
-        </div>
-    </div>
+    {% endfor %}
     </div>
 
   <main role="main" class="container p-0">
