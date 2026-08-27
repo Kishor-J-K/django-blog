@@ -2,11 +2,9 @@ from django.shortcuts import redirect, render
 from blogs.models import Category, Blog
 
 def home(request):
-    categories = Category.objects.all()
     featured_blogs = Blog.objects.filter(is_featured=True,status='published').order_by('-updated_at')[:3]  # Get the latest 3 featured blogs
     posts = Blog.objects.filter(is_featured=False, status='published').order_by('-updated_at')  # Get all non-featured blogs
     context = {
-        'categories': categories,
         'featured_blogs': featured_blogs,
         'posts': posts
     }
