@@ -1,0 +1,11 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+
+<div class="col-md-8 px-0">
+      <h1 class="display-4 font-italic">{{ blog.title }}</h1>
+      <p class="lead my-3">{{ blog.short_description }}</p>
+      <p>{{ blog.blog_body }}</p>
+    </div>
+
+{% endblock %}

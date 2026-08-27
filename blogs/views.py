@@ -21,3 +21,13 @@ def posts_by_category(request, category_id):
         'posts': posts
     }
     return render(request, 'posts_by_category.html', context)
+
+def blogs(request, slug):
+    try:
+        blog = Blog.objects.get(slug=slug, status='published')
+    except Blog.DoesNotExist:
+        return redirect('home')  # Redirect to home if blog does not exist
+    context = {
+        'blog': blog
+    }
+    return render(request, 'blogs.html', context)
