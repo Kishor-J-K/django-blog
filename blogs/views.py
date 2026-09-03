@@ -1,7 +1,11 @@
+from django.contrib import auth
 from django.shortcuts import redirect, render
 from assignments.models import About
+from blog_main.forms import UserRegistrationForm
+from django.contrib.auth.forms import AuthenticationForm
 from blogs.models import Category, Blog
 from django.db.models import Q
+from django.contrib.auth import login
 
 def home(request):
     featured_blogs = Blog.objects.filter(is_featured=True,status='published').order_by('-updated_at')[:3]  # Get the latest 3 featured blogs
@@ -53,3 +57,42 @@ def search(request):
         'keyword': keyword
     }
     return render(request, 'search_results.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirect to home page after successful registration
+        else:
+            print(form.errors)  # Print form errors to the console for debugging
+    else:
+        form = UserRegistrationForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'register.html', context)
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            
+            user = auth.authenticate(request, username=username, password=password)
+            if user is not None:
+                auth.login(request, user)
+            return redirect('home')  # Redirect to home page after successful login
+        form = AuthenticationForm(request)
+        context = {
+            'form': form
+        }
+        return render(request, 'login.html', context)
+    
+    
+def logout_view(request):
+    auth.logout(request)
+    return redirect('home')
