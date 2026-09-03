@@ -1,12 +1,21 @@
 from django.shortcuts import redirect, render
+from assignments.models import About
 from blogs.models import Category, Blog
+from django.db.models import Q
 
 def home(request):
     featured_blogs = Blog.objects.filter(is_featured=True,status='published').order_by('-updated_at')[:3]  # Get the latest 3 featured blogs
     posts = Blog.objects.filter(is_featured=False, status='published').order_by('-updated_at')  # Get all non-featured blogs
+
+    try:
+        about = About.objects.get()
+    except About.DoesNotExist:
+        about = None
+
     context = {
         'featured_blogs': featured_blogs,
-        'posts': posts
+        'posts': posts,
+        'about': about
     }
     return render(request, 'home.html', context) 
 
@@ -31,3 +40,16 @@ def blogs(request, slug):
         'blog': blog
     }
     return render(request, 'blogs.html', context)
+
+def search(request):
+    keyword = request.GET.get('keyword')
+    if keyword:
+        posts = Blog.objects.filter(Q(title__icontains=keyword) | Q(short_description__icontains=keyword), status='published').order_by('-updated_at')
+    else:
+        posts = Blog.objects.none()  # Return an empty queryset if no keyword is provided
+
+    context = {
+        'posts': posts,
+        'keyword': keyword
+    }
+    return render(request, 'search_results.html', context)

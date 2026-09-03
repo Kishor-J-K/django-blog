@@ -2,22 +2,25 @@
 
 {% block content %}
 
-   <h3><a href="{% url 'category' slug=category.slug %}">{{ category.category_name }}</a></h3>
-  <!-- Featured Blogs -->
-    <div class="row mb-2 g-2">
-      {% for post in posts %}
+<h3>{{ category.category_name }}</h3>
+
+<div class="row mb-2 g-2">
+  {% for post in posts %}
     <div class="col-md-6">
-        <div class="card">
+      <div class="card">
         <div class="card-body">
-            <h3>{{post.title}}</h3>
-            <small class="mb-1 text-muted">{{ post.updated_at|date:"M d" }} | {{ post.author.username }}</small>
-            <p class="card-text">
-            {{post.short_description | truncatewords:20}}
-            </p>
+          <h3><a href="{% url 'blogs' slug=post.slug %}" class="text-dark">{{ post.title }}</a></h3>
+          <small class="mb-1 text-muted">{{ post.updated_at|date:"M d" }} | {{ post.author.username }}</small>
+          <p class="card-text">
+            {{ post.short_description|truncatewords:20 }}
+          </p>
         </div>
-        </div>
+      </div>
     </div>
-    {% endfor %}
+  {% empty %}
+    <div class="col-12">
+      <p class="text-muted">No posts available in this category yet.</p>
     </div>
+  {% endfor %}
 </div>
 {% endblock %}
