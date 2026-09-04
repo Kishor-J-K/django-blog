@@ -77,21 +77,15 @@ def register(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST or None)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            
-            user = auth.authenticate(request, username=username, password=password)
-            if user is not None:
-                auth.login(request, user)
-            return redirect('home')  # Redirect to home page after successful login
+            auth.login(request, form.get_user())
+            return redirect('home')
+    else:
         form = AuthenticationForm(request)
-        context = {
-            'form': form
-        }
-        return render(request, 'login.html', context)
-    
+
+    return render(request, 'login.html', {'form': form})
+
     
 def logout_view(request):
     auth.logout(request)
