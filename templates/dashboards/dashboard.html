@@ -2,33 +2,36 @@
 {% block content %}
 
 <div class="row">
-  <div class="col-md-3">
-    <div class="card mb-3">
-      <div class="nav flex-column nav-pills bg-light" aria-orientation="vertical">
-        <a href="" class="nav-link text-dark bg-warning">Dashboard</a>
-        <a href="" class="nav-link text-dark bg-warning">Categories</a>
-        <a href="" class="nav-link text-dark bg-warning">Blogs</a>
-        <a href="" class="nav-link text-dark bg-warning">Logout</a>
-      </div>
-    </div>
 
-    <div class="card mb-9">
-      <div class="row">
-        <div class="col">
-            <div class="card border-default mb-3">
-                <div class="card-header text-center text-uppercase font-weight-bold">All Categories</div>
-                <div class="card-body text-center">{{ category_count }}</div>
+  <div class="col-md-3 mb-3">
+    {% include 'dashboards/sidebar.html' %}
+  </div>
+
+  <div class="col-md-9">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+          <div class="card border-default mb-3">
+              <div class="card-header text-center text-uppercase font-weight-bold">All Categories</div>
+             <div class="card-body text-dark">
+              <h5 class="card-title text-center">{{ category_count }}</h5>
             </div>
-        </div>
-        <div class="col">
-            <div class="card border-default mb-3">
-                <div class="card-header text-center text-uppercase font-weight-bold">All posts</div>
-                <div class="card-body text-center">{{ blogs_count }}</div>
-            </div>
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="card border-default mb-3">
+              <div class="card-header text-center text-uppercase font-weight-bold">All posts</div>
+              <div class="card-body text-center">
+                <h5 class="card-title">{{ blogs_count }}</h5>
+              </div>
+          </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
 </div>
 
 {% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-page row">
+  <div class="col-md-3 mb-3">
+    {% include 'dashboards/sidebar.html' %}
+  </div>
+
+  <div class="col-md-9">
+    <div class="category-panel">
+      <div class="category-heading d-flex align-items-center justify-content-between">
+        <h1>All Categories</h1>
+        <a href="{% url 'add_category' %}" class="btn btn-dark category-add-button">
+          <i class="fa fa-plus mr-1" aria-hidden="true"></i> Add New
+        </a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table category-table">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Category Name</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Updated At</th>
+                  <th scope="col" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ category.category_name }}</td>
+                  <td>{{ category.created_at|date:"F j, Y, g:i a" }}</td>
+                  <td>{{ category.updated_at|date:"F j, Y, g:i a" }}</td>
+                  <td class="category-actions text-center">
+                    <a href="{% url 'edit_category' category.id %}" class="category-edit" aria-label="Edit {{ category.category_name }}">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                    &nbsp;
+                    <a href="{% url 'delete_category' category.id %}" class="category-delete" aria-label="Delete {{ category.category_name }}">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No categories found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

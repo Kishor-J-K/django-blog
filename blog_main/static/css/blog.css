@@ -76,3 +76,159 @@ h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+/* Dashboard category table */
+.dashboard-page {
+  margin-top: 1.25rem;
+}
+
+.dashboard-page .card {
+  border: 0;
+  border-radius: 0;
+}
+
+.dashboard-page .nav-pills {
+  padding: 0.65rem 0;
+  border: 1px solid #f0f0f0;
+}
+
+.dashboard-page .nav-pills .nav-link {
+  border-radius: 0;
+  color: #555;
+  font-size: 0.82rem;
+  padding: 0.52rem 0.85rem;
+}
+
+.dashboard-page .nav-pills .nav-link.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.category-panel {
+  border-top: 1px solid #f0f0f0;
+}
+
+.category-heading {
+  min-height: 4.4rem;
+  padding: 0.5rem 0 0.75rem;
+}
+
+.category-heading h1 {
+  margin: 0;
+  color: #222;
+  font-size: 1.65rem;
+}
+
+.category-add-button {
+  border-radius: 0.15rem;
+  font-size: 0.75rem;
+  padding: 0.42rem 0.65rem;
+}
+
+.category-table {
+  margin-bottom: 0;
+  color: #555;
+  font-size: 0.76rem;
+}
+
+.category-table thead th {
+  border-top: 0;
+  border-bottom: 1px solid #dedede;
+  color: #333;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.72rem 0.65rem;
+  white-space: nowrap;
+}
+
+.category-table tbody th,
+.category-table tbody td {
+  border-top: 1px solid #ededed;
+  padding: 0.72rem 0.65rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.category-table tbody th {
+  color: #666;
+  font-weight: 400;
+}
+
+.category-actions a {
+  display: inline-block;
+  margin: 0 0.3rem;
+  font-size: 0.82rem;
+}
+
+.category-delete-form {
+  display: inline-block;
+  margin: 0 0.3rem;
+}
+
+.category-edit {
+  color: #65a77c;
+}
+
+.category-delete {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #dc5d68;
+  font-size: 0.82rem;
+  padding: 0;
+}
+
+.category-form-panel {
+  border-top: 1px solid #f0f0f0;
+  padding: 0.45rem 0 1rem;
+}
+
+.category-form-panel h1 {
+  margin: 0 0 0.2rem;
+  color: #222;
+  font-size: 1.65rem;
+}
+
+.category-form-panel form {
+  max-width: 31rem;
+}
+
+.category-form-panel label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #555;
+  font-size: 0.75rem;
+}
+
+.category-form-panel label span {
+  color: #c84a4a;
+  margin-left: 0.15rem;
+}
+
+.category-form-input {
+  border-color: #dfe2e5;
+  border-radius: 0.15rem;
+  height: 2.35rem;
+  font-size: 0.8rem;
+}
+
+.category-submit-button {
+  border-radius: 0.15rem;
+  font-size: 0.75rem;
+  padding: 0.42rem 0.65rem;
+}
+
+.category-form-error {
+  display: block;
+  color: #c84a4a;
+  margin-top: 0.3rem;
+}
+
+@media (max-width: 767.98px) {
+  .dashboard-page {
+    margin-top: 0.5rem;
+  }
+
+  .category-heading h1 {
+    font-size: 1.35rem;
+  }
+}

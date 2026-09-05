@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-page row">
+    <div class="col-md-3 mb-3">
+        {% include 'dashboards/sidebar.html' %}
+    </div>
+
+    <div class="col-md-9">
+        <section class="category-form-panel">
+            <h1>Edit Category</h1>
+
+            <form action="{% url 'edit_category' category.id %}" method="post" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.category_name.id_for_label }}">Category name<span aria-hidden="true">*</span></label>
+                    {{ form.category_name }}
+                    {% for error in form.category_name.errors %}
+                        <small class="category-form-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                {% for error in form.non_field_errors %}
+                    <small class="category-form-error">{{ error }}</small>
+                {% endfor %}
+                <button type="submit" class="btn btn-warning category-submit-button">Submit</button>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
