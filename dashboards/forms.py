@@ -1,5 +1,6 @@
 from django import forms
 from blogs.models import Category, Blog
+from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -40,4 +41,24 @@ class BlogForm(forms.ModelForm):
         for field_name in ('title', 'category', 'short_description', 'blog_body'):
             self.fields[field_name].required = True
         self.fields['status'].initial = 'Draft'
+        
+        
+# def UserForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active']
+#         labels = {
+#             'username': 'Username',
+#             'email': 'Email',
+#             'first_name': 'First Name',
+#             'last_name': 'Last Name',
+#             'is_staff': 'Staff Status',
+#             'is_active': 'Active Status',
+#         }
+#         widgets = {
+#             'username': forms.TextInput(attrs={
+#                 'class': 'form-control user-form-input',
+#                 'autocomplete': 'off',
+#             }),
+#         }
         

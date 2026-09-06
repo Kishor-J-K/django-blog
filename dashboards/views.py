@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from blogs.models import Category, Blog
 from django.contrib.auth.decorators import login_required
 from .forms import CategoryForm, BlogForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -14,6 +15,8 @@ def dashboard(request):
         'blogs_count': blogs_count
     }
     return render(request, 'dashboards/dashboard.html', context)
+
+# Categories CRED operations
 
 @login_required(login_url='login')
 def categories(request):
@@ -51,6 +54,8 @@ def delete_category(request, category_id):
     if request.method == 'POST':
         category.delete()
     return redirect('categories')
+
+# Posts CRED operations
 
 def posts(request):
     posts = Blog.objects.all()
@@ -91,3 +96,26 @@ def delete_post(request, post_id):
     if request.method == 'POST':
         post.delete()
     return redirect('posts')
+
+
+# Users CRED operations 
+
+def users(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, 'dashboards/users.html', context)
+
+def add_user(request):
+    return render(request, 'dashboards/add_user.html')
+
+def edit_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'dashboards/edit_user.html', {'user': user})
+
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.delete()
+    return redirect('users')
