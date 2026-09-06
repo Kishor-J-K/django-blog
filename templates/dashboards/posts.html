@@ -8,9 +8,9 @@
   <div class="col-md-9">
     <div class="category-panel">
       <div class="category-heading d-flex align-items-center justify-content-between">
-        <h1>All Categories</h1>
-        <a href="{% url 'add_category' %}" class="btn btn-dark category-add-button">
-          <i class="fa fa-plus mr-1" aria-hidden="true"></i> Add Category
+        <h1>All Posts</h1>
+        <a href="{% url 'add_post' %}" class="btn btn-dark category-add-button">
+          <i class="fa fa-plus mr-1" aria-hidden="true"></i> Add Post
         </a>
       </div>
 
@@ -19,27 +19,31 @@
             <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Category Name</th>
-                  <th scope="col">Created At</th>
-                  <th scope="col">Updated At</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Featured</th>
                   <th scope="col" class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-                {% for category in categories %}
+                {% for post in posts %}
                 <tr>
                   <th scope="row">{{ forloop.counter }}</th>
-                  <td>{{ category.category_name }}</td>
-                  <td>{{ category.created_at|date:"F j, Y, g:i a" }}</td>
-                  <td>{{ category.updated_at|date:"F j, Y, g:i a" }}</td>
+                  <td>{{ post.title }}</td>
+                  <td>{{ post.category }}</td>
+                  <td>{{ post.author }}</td>
+                  <td>{{ post.status }}</td>
+                  <td>{{ post.is_featured }}</td>
                   <td class="category-actions text-center">
-                    <a href="{% url 'edit_category' category.id %}" class="category-edit" aria-label="Edit {{ category.category_name }}">
+                    <a href="{% url 'edit_post' post.id %}" class="category-edit" aria-label="Edit {{ post.title }}">
                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                     &nbsp;
-                    <form action="{% url 'delete_category' category.id %}" method="post" class="d-inline">
+                    <form action="{% url 'delete_post' post.id %}" method="post" class="d-inline">
                       {% csrf_token %}
-                      <button type="submit" class="category-delete border-0 bg-transparent p-0" aria-label="Delete {{ category.category_name }}" onclick="return confirm('Delete {{ category.category_name }} category?');">
+                      <button type="submit" class="category-delete border-0 bg-transparent p-0" aria-label="Delete {{ post.title }}" onclick="return confirm('Delete {{ post.title }} post?');">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </form>
@@ -47,7 +51,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                  <td colspan="5" class="text-center">No categories found.</td>
+                  <td colspan="5" class="text-center">No posts found.</td>
                 </tr>
                 {% endfor %}
             </tbody>
