@@ -37,9 +37,12 @@
                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                     &nbsp;
-                    <a href="{% url 'delete_category' category.id %}" class="category-delete" aria-label="Delete {{ category.category_name }}">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                    </a>
+                    <form action="{% url 'delete_category' category.id %}" method="post" class="d-inline">
+                      {% csrf_token %}
+                      <button type="submit" class="category-delete border-0 bg-transparent p-0" aria-label="Delete {{ category.category_name }}" onclick="return confirm('Delete {{ category.category_name }} category?');">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </form>
                   </td>
                 </tr>
                 {% empty %}
