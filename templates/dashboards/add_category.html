@@ -7,6 +7,7 @@
     </div>
 
     <div class="col-md-9">
+        {% if perms.auth.add_category %}
         <section class="category-form-panel">
             <h1>Add New Category</h1>
 
@@ -16,6 +17,11 @@
                 <button type="submit" class="btn btn-warning category-submit-button">Submit</button>
             </form>
         </section>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            You do not have permission to add a new category.
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

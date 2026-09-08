@@ -8,6 +8,6 @@
     <a href="{% url 'categories' %}" class="nav-link text-dark {% if request.resolver_match.url_name == 'categories' %}bg-warning{% endif %}">Categories</a>
     <a href="{% url 'posts' %}" class="nav-link text-dark {% if request.resolver_match.url_name == 'posts' %}bg-warning{% endif %}">Posts</a>
 
-    <a href="" class="nav-link text-dark">Logout</a>
+    <a href="{% url 'logout' %}" class="nav-link text-dark">Logout</a>
   </div>
 </div>   

@@ -1,9 +1,9 @@
 from django.contrib import auth
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from assignments.models import About
 from blog_main.forms import UserRegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
-from blogs.models import Category, Blog
+from blogs.models import Category, Blog, Comment
 from django.db.models import Q
 from django.contrib.auth import login
 
@@ -36,12 +36,24 @@ def posts_by_category(request, category_id):
     return render(request, 'posts_by_category.html', context)
 
 def blogs(request, slug):
-    try:
-        blog = Blog.objects.get(slug=slug, status='published')
-    except Blog.DoesNotExist:
-        return redirect('home')  # Redirect to home if blog does not exist
+    blog = get_object_or_404(Blog, slug=slug, status='published')
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login')
+
+        comment_text = request.POST.get('comment', '').strip()
+        if comment_text:
+            Comment.objects.create(user=request.user, blog=blog, comment=comment_text)
+        return redirect('blogs', slug=blog.slug)
+
+    comments = Comment.objects.filter(blog=blog).order_by('-created_at')
+    comments_count = comments.count()
+
     context = {
-        'blog': blog
+        'blog': blog,
+        'comments': comments,
+        'comments_count': comments_count
     }
     return render(request, 'blogs.html', context)
 
@@ -64,7 +76,7 @@ def register(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  # Redirect to home page after successful registration
+            return redirect('login')  # Redirect to login page after successful registration
         else:
             print(form.errors)  # Print form errors to the console for debugging
     else:

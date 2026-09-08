@@ -7,6 +7,7 @@
     </div>
 
     <div class="col-md-9">
+        {% if perms.auth.change_post %}
         <section class="category-form-panel">
             <h1>Edit Post</h1>
 
@@ -16,6 +17,11 @@
                 <button type="submit" class="btn btn-warning category-submit-button">Update</button>
             </form>
         </section>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            You do not have permission to edit this post.
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
