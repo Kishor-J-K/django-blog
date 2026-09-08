@@ -1,8 +1,9 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from blogs.models import Category, Blog
-from django.contrib.auth.decorators import login_required
-from .forms import CategoryForm, BlogForm
-from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect, render 
+from blogs.models import Category, Blog 
+from django.contrib.auth.decorators import login_required 
+from .forms import CategoryForm, BlogForm 
+from django.contrib.auth.models import User 
+from .forms import AddUserForm
 
 # Create your views here.
 
@@ -100,6 +101,7 @@ def delete_post(request, post_id):
 
 # Users CRED operations 
 
+@login_required(login_url='login')
 def users(request):
     users = User.objects.all()
     context = {
@@ -108,11 +110,20 @@ def users(request):
     return render(request, 'dashboards/users.html', context)
 
 def add_user(request):
-    return render(request, 'dashboards/add_user.html')
+    form = AddUserForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('users')
+    return render(request, 'dashboards/add_user.html', {'form': form})
 
+@login_required(login_url='login')
 def edit_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    return render(request, 'dashboards/edit_user.html', {'user': user})
+    form = AddUserForm(request.POST or None, instance=user)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('users')
+    return render(request, 'dashboards/edit_user.html', {'form': form, 'user': user})
 
 def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)

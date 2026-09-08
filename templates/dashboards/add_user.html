@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="dashboard-page row">
+    <div class="col-md-3 mb-3">
+        {% include 'dashboards/sidebar.html' %}
+    </div>
+
+    <div class="col-md-9">
+        {% if perms.auth.add_user %}
+        <section class="category-form-panel">
+            <h2>Add New User</h2>
+
+            <form action="{% url 'add_user' %}" method="post" class="category-form">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-warning category-submit-button">Submit</button>
+            </form>
+        </section>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            You do not have permission to add a new user.   
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

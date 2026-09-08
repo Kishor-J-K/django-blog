@@ -1,6 +1,7 @@
-from django import forms
-from blogs.models import Category, Blog
-from django.contrib.auth.models import User
+from django import forms 
+from blogs.models import Category, Blog 
+from django.contrib.auth.models import User 
+from django.contrib.auth.forms import UserCreationForm
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -43,22 +44,33 @@ class BlogForm(forms.ModelForm):
         self.fields['status'].initial = 'Draft'
         
         
-# def UserForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active']
-#         labels = {
-#             'username': 'Username',
-#             'email': 'Email',
-#             'first_name': 'First Name',
-#             'last_name': 'Last Name',
-#             'is_staff': 'Staff Status',
-#             'is_active': 'Active Status',
-#         }
-#         widgets = {
-#             'username': forms.TextInput(attrs={
-#                 'class': 'form-control user-form-input',
-#                 'autocomplete': 'off',
-#             }),
-#         }
+class AddUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email','first_name', 'last_name','is_staff', 'is_active','is_superuser','groups','user_permissions']
+        labels = {
+            'username': 'Username',
+            'email': 'Email',
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'password': 'Password',
+            'is_staff': 'Staff Status',
+            'is_active': 'Active Status',
+            'is_superuser': 'Superuser Status',
+            'groups': 'Groups',
+        } 
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control user-form-input',
+                'autocomplete': 'off',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control user-form-input',
+                'autocomplete': 'off',
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'form-control user-form-input',
+                'autocomplete': 'off',
+            }),
+        }
         
