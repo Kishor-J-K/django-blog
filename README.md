@@ -6,6 +6,20 @@ A full-stack blog application built with Django 6.1, featuring category-based br
 
 ---
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [URL Routes](#url-routes)
+- [Getting Started (Local Setup)](#getting-started-local-setup)
+- [Configuration Notes](#configuration-notes)
+- [Deployment](#deployment)
+- [License](#license)
+- [Author](#author)
+
+---
+
 ## Features
 
 - **Blog browsing** — featured posts on the homepage, category filtering, and full-text search across titles and descriptions
@@ -35,22 +49,83 @@ A full-stack blog application built with Django 6.1, featuring category-based br
 
 ```
 django-blog/
-├── blog_main/          # Project settings, URLs, WSGI/ASGI config, global static files
-├── blogs/               # Core blog app — models, views, and URLs for posts, categories, comments
-├── assignments/         # "About" section and social links
-├── dashboards/          # Admin dashboard app — CRUD for posts, categories, and users
-├── templates/           # HTML templates (base, home, login, register, dashboard views, etc.)
-├── db.sqlite3           # SQLite database
+├── blogs/                        # Core blog app
+│   ├── migrations/
+│   ├── admin.py
+│   ├── apps.py
+│   ├── context_processors.py     # Injects categories & social links into all templates
+│   ├── models.py                 # Category, Blog, Comment
+│   ├── urls.py
+│   └── views.py                  # home, blogs, search, login, register, logout
+│
+├── assignments/                  # "About" section & social links
+│   ├── migrations/
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py                 # About, Sociallinks
+│   └── views.py
+│
+├── dashboards/                   # Admin dashboard app
+│   ├── migrations/
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py                  # CategoryForm, BlogForm, AddUserForm
+│   ├── models.py
+│   ├── urls.py
+│   └── views.py                  # CRUD for categories, posts, and users
+│
+├── blog_main/                    # Project configuration
+│   ├── static/css/blog.css
+│   ├── forms.py                  # UserRegistrationForm
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+│
+├── templates/
+│   ├── dashboards/                # Dashboard views (categories, posts, users, sidebar, etc.)
+│   ├── base.html                  # Site-wide layout, header, and footer
+│   ├── home.html
+│   ├── blogs.html                 # Single post + comments
+│   ├── login.html
+│   ├── register.html
+│   ├── posts_by_category.html
+│   └── search_results.html
+│
+├── db.sqlite3
 ├── manage.py
-└── requirements.txt
+├── requirements.txt
+└── README.md
 ```
 
 ### Key Models
 
-- **Category** — blog post categories
-- **Blog** — post title, slug, category, author, featured image, description, body, status (Draft/Published), and featured flag
-- **Comment** — user comments linked to a blog post
-- **About** / **Sociallinks** — site-wide "about" content and social media links shown on the homepage and footer
+| Model | App | Purpose |
+|---|---|---|
+| `Category` | blogs | Blog post categories |
+| `Blog` | blogs | Post title, slug, category, author, featured image, description, body, status (Draft/Published), and featured flag |
+| `Comment` | blogs | User comments linked to a blog post |
+| `About` | assignments | Site-wide "about" content shown on the homepage sidebar |
+| `Sociallinks` | assignments | Social media links shown in the homepage sidebar and footer |
+
+---
+
+## URL Routes
+
+| URL | View | Description |
+|---|---|---|
+| `/` | `blogs.views.home` | Homepage — featured posts + latest posts |
+| `/<slug>/` | `blogs.views.blogs` | Single post detail + comments |
+| `/category/<id>/` | `blogs.views.posts_by_category` | Posts filtered by category |
+| `/search/?keyword=...` | `blogs.views.search` | Search posts by title/description |
+| `/login/` | `blogs.views.login_view` | User login |
+| `/register/` | `blogs.views.register` | User registration |
+| `/logout/` | `blogs.views.logout_view` | User logout |
+| `/dashboard/` | `dashboards.views.dashboard` | Dashboard home (login required) |
+| `/dashboard/categories/` | `dashboards.views.categories` | Manage categories |
+| `/dashboard/posts/` | `dashboards.views.posts` | Manage posts |
+| `/dashboard/users/` | `dashboards.views.users` | Manage users |
+| `/admin/` | Django admin | Built-in Django admin panel |
 
 ---
 
